@@ -1,0 +1,67 @@
+<template>
+	<el-container>
+		<el-header>
+			<!-- 头部 -->
+			<v-top-header></v-top-header>
+		</el-header>
+		<el-container>
+			<el-aside width="200px">
+				<!-- 侧边栏 -->
+				<v-left-aside></v-left-aside>
+			</el-aside>
+			<el-main>
+				<router-view/>
+			</el-main>
+		</el-container>
+	</el-container>
+
+</template>
+<script>
+import TopHeader from './nav_bar/TopHeader.vue'
+import LeftAside from './nav_bar/LeftAside.vue'
+export default {
+	components: {
+		'v-top-header': TopHeader,
+		'v-left-aside': LeftAside
+	},
+	data() {
+		return {
+			isCollapse: true
+		};
+	},
+	methods: {
+		handleOpen(key, keyPath) {
+			console.log(key, keyPath);
+		},
+		handleClose(key, keyPath) {
+			console.log(key, keyPath);
+		}
+	}
+}
+</script>
+<style lang="less">
+.el-header {
+    position: fixed;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+    background-color: #f8f8f9;
+}
+
+.el-aside {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin-top: 60px;
+    color: #333;
+    text-align: center;
+    background-color: #f8f8f9;
+}
+
+.el-main {
+    background-color: #e9eef3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+}
+</style>
