@@ -1,5 +1,5 @@
 <template>
-	<el-menu :default-active="navActive" class="el-menu-vertical-demo">
+	<el-menu :default-active="navActive" class="el-menu-vertical-demo" :router="true">
 		<!-- <el-submenu index="1">
 			<template slot="title">
 				<i class="el-icon-location"></i>
@@ -18,15 +18,15 @@
 				<el-menu-item index="1-4-1">选项1</el-menu-item>
 			</el-submenu>
 		</el-submenu> -->
-		<el-menu-item index="1">
-			<i class="el-icon-edit-outline"></i>
+		<el-menu-item index="1" :route="{name: 'PostCreate'}">
+			<i class="el-icon-edit-outline" ></i>
 			<span slot="title">发布笔记</span>
 		</el-menu-item>
-		<el-menu-item index="2">
+		<el-menu-item index="2" :route="{name: 'PostList'}" >
 			<i class="el-icon-tickets"></i>
 			<span slot="title">笔记列表</span>
 		</el-menu-item>
-		<el-menu-item index="3">
+		<el-menu-item index="3" :route="{name: 'WebSet'}">
 			<i class="el-icon-setting"></i>
 			<span slot="title">站点设置</span>
 		</el-menu-item>

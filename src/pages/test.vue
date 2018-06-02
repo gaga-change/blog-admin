@@ -1,9 +1,20 @@
 <template>
-    <div></div>
+	<div >
+		<textarea ref="markdown"></textarea>
+	</div>
 </template>
-<style>
-    div {
-        color: yellow;
-    }
-</style>
+<script>
+import SimpleMDE from 'simplemde'
+export default {
+	data() {
+		return {
 
+		}
+	},
+	mounted() {
+		// console.log(SimpleMDE)
+		// const simplemde = new Simplemde({ element:  })
+		var simplemde = new SimpleMDE({ element: this.$refs['markdown'] });
+	}
+}
+</script>

@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AdminHome from '@/pages/AdminHome'
 import test from '@/pages/test'
-import Default from '@/pages/content/Default'
+import PostCreate from '@/pages/content/PostCreate'
+import PostList from '@/pages/content/PostList'
+import WebSet from '@/pages/content/WebSet'
 
 Vue.use(Router)
 
@@ -14,9 +16,19 @@ export default new Router({
 			children: [
 				{
 					path: '',
-					name: 'Default',
-					component: Default
-				}
+					name: 'PostCreate',
+					component: PostCreate
+				},
+				{
+					path: 'post_list',
+					name: 'PostList',
+					component: PostList
+				},
+				{
+					path: 'web_set',
+					name: 'WebSet',
+					component: WebSet
+				},
 			]
 		},
 		{
