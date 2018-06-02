@@ -1,6 +1,6 @@
 <template>
-	<el-menu default-active="1-4-1" class="el-menu-vertical-demo">
-		<el-submenu index="1">
+	<el-menu :default-active="navActive" class="el-menu-vertical-demo">
+		<!-- <el-submenu index="1">
 			<template slot="title">
 				<i class="el-icon-location"></i>
 				<span slot="title">导航一</span>
@@ -17,18 +17,35 @@
 				<span slot="title">选项4</span>
 				<el-menu-item index="1-4-1">选项1</el-menu-item>
 			</el-submenu>
-		</el-submenu>
+		</el-submenu> -->
+		<el-menu-item index="1">
+			<i class="el-icon-edit-outline"></i>
+			<span slot="title">发布笔记</span>
+		</el-menu-item>
 		<el-menu-item index="2">
-			<i class="el-icon-menu"></i>
-			<span slot="title">导航二</span>
+			<i class="el-icon-tickets"></i>
+			<span slot="title">笔记列表</span>
 		</el-menu-item>
-		<el-menu-item index="3" disabled>
-			<i class="el-icon-document"></i>
-			<span slot="title">导航三</span>
-		</el-menu-item>
-		<el-menu-item index="4">
+		<el-menu-item index="3">
 			<i class="el-icon-setting"></i>
-			<span slot="title">导航四</span>
+			<span slot="title">站点设置</span>
 		</el-menu-item>
 	</el-menu>
 </template>
+<script>
+export default {
+	data() {
+		return {
+			navActive: '1'
+		}
+	},
+	created( ) {
+		setTimeout(() => {
+		}, 3000)
+	},
+	mounted() {
+		// this.navActive = '3'
+	}
+}
+</script>
+

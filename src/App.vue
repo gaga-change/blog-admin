@@ -11,7 +11,10 @@ export default {
 </script>
 
 <style lang="less">
-// @import './assets/less/main.less';
+#app {
+  overflow-y: hidden;
+  height: 100%;
+}
 </style>
 
 
