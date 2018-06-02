@@ -60,6 +60,7 @@ export default {
     box-sizing: border-box;
 }
 .page-component__scroll {
+	width: 100%;
     height: calc(100% - 60px);
     margin-top: 60px;
     .el-scrollbar__wrap {
@@ -83,7 +84,7 @@ export default {
     background-color: #fff;
     color: #333;
     margin-left: 200px;
-    text-align: center;
-	line-height: 160px;
+    // text-align: center;
+	// line-height: 160px;
 }
 </style>
