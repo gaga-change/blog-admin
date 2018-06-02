@@ -18,15 +18,15 @@
 				<el-menu-item index="1-4-1">选项1</el-menu-item>
 			</el-submenu>
 		</el-submenu> -->
-		<el-menu-item index="1" :route="{name: 'PostCreate'}">
+		<el-menu-item index="PostCreate" :route="{name: 'PostCreate'}">
 			<i class="el-icon-edit-outline" ></i>
 			<span slot="title">发布笔记</span>
 		</el-menu-item>
-		<el-menu-item index="2" :route="{name: 'PostList'}" >
+		<el-menu-item index="PostList" :route="{name: 'PostList'}" >
 			<i class="el-icon-tickets"></i>
 			<span slot="title">笔记列表</span>
 		</el-menu-item>
-		<el-menu-item index="3" :route="{name: 'WebSet'}">
+		<el-menu-item index="WebSet" :route="{name: 'WebSet'}">
 			<i class="el-icon-setting"></i>
 			<span slot="title">站点设置</span>
 		</el-menu-item>
@@ -40,8 +40,7 @@ export default {
 		}
 	},
 	created( ) {
-		setTimeout(() => {
-		}, 3000)
+		this.navActive = this.$route.name
 	},
 	mounted() {
 		// this.navActive = '3'
