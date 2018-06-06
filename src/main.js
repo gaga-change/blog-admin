@@ -25,8 +25,7 @@ router.beforeEach(async (to, from, next) => {
     if (body.data) {
         next()
     } else {
-        next()
-        // next({name: 'UserLogin', query: {retpath: encodeURIComponent(to.fullPath)}})
+        next({name: 'UserLogin'})
     }
 })
 /* eslint-disable no-new */
