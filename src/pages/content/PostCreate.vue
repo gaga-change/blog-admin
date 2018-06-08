@@ -38,10 +38,13 @@
 <script>
 import SimpleMDE from 'simplemde'
 export default {
-
-
 	data() {
 		return {
+			CREAT: 1,
+			MODIFY: 2,
+			status: null, // 状态：编辑或创建
+			query: this.$route.query,
+			detail: {}, // 详情
 			ruleForm: {
 				name: '',
 				region: '',
@@ -78,11 +81,27 @@ export default {
 			}
 		};
 	},
+	created() {
+		if (this.query.id) {
+			this.status = this.MODIFY
+		}
+		this.initData()
+	},
 	mounted() {
-
 		var simplemde = new SimpleMDE({ element: this.$refs['markdown'] });
 	},
 	methods: {
+		// 数据初始化
+		initData() {
+			if (this.status == this.MODIFY) { // 编辑
+				this.$API.getPost({id: this.query.id}).then(res => {
+					console.log(res.data)
+					this.detail = res.data
+				})
+			} else { // 创建
+
+			}
+		},
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {

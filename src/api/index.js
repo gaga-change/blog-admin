@@ -6,6 +6,7 @@ export default function () {
         user: params => get(`${base}/user`, params), // 获取当前登入用户
         login: params => post(`${base}/user/login`, params), // 登入
         posts: params => get(`${base}/posts`, params), // 登入
+        getPost: params => get(`${base}/post`, params), // 登入
 
     }
 
