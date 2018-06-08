@@ -18,17 +18,26 @@ export default new Router({
 				{
 					path: '',
 					name: 'PostCreate',
-					component: PostCreate
+					component: PostCreate,
+					meta: {
+						title: '发布笔记'
+					}
 				},
 				{
 					path: 'post_list',
 					name: 'PostList',
-					component: PostList
+					component: PostList,
+					meta: {
+						title: '笔记列表'
+					}
 				},
 				{
 					path: 'web_set',
 					name: 'WebSet',
-					component: WebSet
+					component: WebSet,
+					meta: {
+						title: '站点设置'
+					}
 				},
 			]
 		},
@@ -36,11 +45,17 @@ export default new Router({
 			path: '/login',
 			name: 'UserLogin',
 			component: UserLogin,
+			meta: {
+				title: '登入'
+			}
 		},
 		{
 			path: '/test',
 			name: test,
-			component: test
+			component: test,
+			meta: {
+				title: '测试'
+			}
 		}
 	]
 })

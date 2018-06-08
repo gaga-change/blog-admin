@@ -15,8 +15,8 @@
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" width="100">
 				<template slot-scope="scope">
-					<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-					<el-button type="text" size="small">编辑</el-button>
+					<!-- <el-button type="text" size="small">查看</el-button> -->
+					<el-button @click="goModify(scope.row)"  type="text" size="small">编辑</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -38,8 +38,9 @@ export default {
 		this.initData()
 	},
 	methods: {
-		handleClick(row) {
-			console.log(row)
+		// 挑战之修改页面
+		goModify(row) {
+			this.$router.push({ name: 'PostCreate', query: { id: row.id } })
 		},
 		// 初始化数据
 		initData() {
