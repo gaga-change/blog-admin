@@ -83,7 +83,7 @@ export default {
 		// 数据初始化
 		initData() {
 			if (this.status == this.MODIFY) { // 编辑
-				this.$API.getPost({ id: this.query.id }).then(res => {
+				this.$API.postGet({ id: this.query.id }).then(res => {
 					let detail = res.data
 					this.ruleForm.title = detail.title
 					this.ruleForm.categories = detail.categories.join(',')
