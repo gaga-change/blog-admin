@@ -5,10 +5,12 @@ export default function () {
     const api = {
         user: params => get(`${base}/user`, params), // 获取当前登入用户
         login: params => post(`${base}/user/login`, params), // 登入
+        posts: params => get(`${base}/posts`, params), // 登入
+
     }
 
-    function get(...args) {
-        return axios.get(...args).then(middleware)
+    function get(url, params) {
+        return axios.get(url, {params}).then(middleware)
     }
 
     function post(...args) {

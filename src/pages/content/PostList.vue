@@ -1,21 +1,17 @@
 <template>
 	<div>
 		<div class="block">
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
-			</el-pagination>
+			<!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+			</el-pagination> -->
 		</div>
-		<el-table :data="tableData" border style="width: 100%">
-			<el-table-column fixed prop="date" label="日期" width="150">
+		<el-table :data="itemList" border style="width: 100%">
+			<el-table-column prop="date" label="日期" width="150">
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120">
+			<el-table-column prop="title" label="标题" >
 			</el-table-column>
-			<el-table-column prop="province" label="省份" width="120">
+			<el-table-column prop="categories" label="目录" width="120">
 			</el-table-column>
-			<el-table-column prop="city" label="市区" width="120">
-			</el-table-column>
-			<el-table-column prop="address" label="地址" width="300">
-			</el-table-column>
-			<el-table-column prop="zip" label="邮编" width="120">
+			<el-table-column prop="tags" label="标签" width="120">
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" width="100">
 				<template slot-scope="scope">
@@ -25,52 +21,50 @@
 			</el-table-column>
 		</el-table>
 		<div class="block">
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
-			</el-pagination>
+			<!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+			</el-pagination> -->
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
-	methods: {
-		handleClick(row) {
-			console.log(row);
-		}
-	},
-
 	data() {
 		return {
-			tableData: [{
-				date: '2016-05-03',
-				name: '王小虎',
-				province: '上海',
-				city: '普陀区',
-				address: '上海市普陀区金沙江路 1518 弄',
-				zip: 200333
-			}, {
-				date: '2016-05-02',
-				name: '王小虎',
-				province: '上海',
-				city: '普陀区',
-				address: '上海市普陀区金沙江路 1518 弄',
-				zip: 200333
-			}, {
-				date: '2016-05-04',
-				name: '王小虎',
-				province: '上海',
-				city: '普陀区',
-				address: '上海市普陀区金沙江路 1518 弄',
-				zip: 200333
-			}, {
-				date: '2016-05-01',
-				name: '王小虎',
-				province: '上海',
-				city: '普陀区',
-				address: '上海市普陀区金沙江路 1518 弄',
-				zip: 200333
-			}]
+			itemList: []
 		}
-	}
+	},
+	created() {
+		this.initData()
+	},
+	methods: {
+		handleClick(row) {
+			console.log(row)
+		},
+		// 初始化数据
+		initData() {
+			this.$API.posts().then(res => {
+				let items = res.data.list || []
+				items.forEach(item => {
+					let tags = item.tags.join(",")
+					let categories = item.categories.join(",")
+					let date = new Date(item.date)
+					let str = []
+					str.push(this.doubleNum(date.getFullYear()))
+					str.push(this.doubleNum(date.getMonth() + 1))
+					str.push(this.doubleNum(date.getDate()))
+					item.date = str.join("-")
+				})
+				let count = res.data.count
+				let page = res.data.page || 1
+				this.itemList = items
+			})
+		},
+		// 数字小于10，补零
+		doubleNum(num) {
+			if (num < 10) return "0" + num
+			return num
+		}
+	},
 }
 </script>
