@@ -15,7 +15,7 @@
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" width="100">
 				<template slot-scope="scope">
-					<!-- <el-button type="text" size="small">查看</el-button> -->
+					<el-button @click="postDelete(scope.row)"  type="text" size="small">删除</el-button>
 					<el-button @click="goModify(scope.row)"  type="text" size="small">编辑</el-button>
 				</template>
 			</el-table-column>
@@ -38,6 +38,24 @@ export default {
 		this.initData()
 	},
 	methods: {
+		// 删除笔记
+		postDelete(row) {
+			this.$confirm('此操作将永久删除该笔记, 是否继续?', '提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			}).then(() => {
+				this.$API.postDel({ id: row.id }).then(res => {
+					this.itemList = this.itemList.filter(item => {
+						return item.id != row.id
+					})
+					this.$message({
+						type: 'success',
+						message: '删除成功!'
+					})
+				})
+			})
+		},
 		// 挑战之修改页面
 		goModify(row) {
 			this.$router.push({ name: 'PostCreate', query: { id: row.id } })
@@ -65,7 +83,8 @@ export default {
 		doubleNum(num) {
 			if (num < 10) return "0" + num
 			return num
-		}
+		},
+
 	},
 }
 </script>
