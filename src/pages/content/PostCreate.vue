@@ -13,7 +13,7 @@
 			<el-form-item label="发布时间" required>
 				<el-col :span="11">
 					<el-form-item prop="date1">
-						<el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+						<el-date-picker type="datetime" placeholder="选择日期时间" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
 					</el-form-item>
 				</el-col>
 			</el-form-item>
@@ -39,6 +39,7 @@ export default {
 			status: null, // 状态：编辑或创建
 			query: this.$route.query,
 			detail: {}, // 详情
+			simplemde: null, 
 			ruleForm: {
 				title: '',
 				categories: '',
@@ -76,7 +77,7 @@ export default {
 		this.initData()
 	},
 	mounted() {
-		var simplemde = new SimpleMDE({ element: this.$refs['markdown'] });
+		this.simplemde = new SimpleMDE({ element: this.$refs['markdown'] })
 	},
 	methods: {
 		// 数据初始化
@@ -87,10 +88,11 @@ export default {
 					this.ruleForm.title = detail.title
 					this.ruleForm.categories = detail.categories.join(',')
 					this.ruleForm.tags = detail.tags.join(',')
-					this.ruleForm.date1 = detail.date
+					this.ruleForm.date1 = new Date(detail.date)
+					this.simplemde.value(detail.markdown)
 				})
 			} else { // 创建
-
+				
 			}
 		},
 		submitForm(formName) {
