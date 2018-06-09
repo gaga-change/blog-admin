@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-loading="loading">
 		<div class="block">
 			<!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
 			</el-pagination> -->
@@ -7,7 +7,7 @@
 		<el-table :data="itemList" border style="width: 100%">
 			<el-table-column prop="date" label="日期" width="150">
 			</el-table-column>
-			<el-table-column prop="title" label="标题" >
+			<el-table-column prop="title" label="标题">
 			</el-table-column>
 			<el-table-column prop="categories" label="目录" width="120">
 			</el-table-column>
@@ -15,8 +15,8 @@
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" width="100">
 				<template slot-scope="scope">
-					<el-button @click="postDelete(scope.row)"  type="text" size="small">删除</el-button>
-					<el-button @click="goModify(scope.row)"  type="text" size="small">编辑</el-button>
+					<el-button @click="postDelete(scope.row)" type="text" size="small">删除</el-button>
+					<el-button @click="goModify(scope.row)" type="text" size="small">编辑</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -31,6 +31,7 @@
 export default {
 	data() {
 		return {
+			loading: true,
 			itemList: []
 		}
 	},
@@ -45,7 +46,9 @@ export default {
 				cancelButtonText: '取消',
 				type: 'warning'
 			}).then(() => {
+				this.loading = true
 				this.$API.postDel({ id: row.id }).then(res => {
+					this.loading = false
 					this.itemList = this.itemList.filter(item => {
 						return item.id != row.id
 					})
@@ -62,7 +65,9 @@ export default {
 		},
 		// 初始化数据
 		initData() {
+			this.loading = true
 			this.$API.posts().then(res => {
+				this.loading = false
 				let items = res.data.list || []
 				items.forEach(item => {
 					let tags = item.tags.join(",")

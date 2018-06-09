@@ -1,8 +1,8 @@
 <template>
-	<div>
+	<div  v-loading="loading">
 		<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 			<el-form-item label="笔记标题" prop="title">
-				<el-input v-model="ruleForm.title"></el-input>
+				<el-input v-model="ruleForm.title" maxlength=50></el-input>
 			</el-form-item>
 			<el-form-item label="笔记分类">
 				<el-input v-model="ruleForm.categories"></el-input>
@@ -22,7 +22,7 @@
 				<el-input type="textarea" v-model="ruleForm.desc"></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="submitForm('ruleForm')">{{status == 2 ? '立即修改' : '立即创建'}}</el-button>
+				<el-button type="primary" @click="submitForm('ruleForm')">{{edit ? '立即修改' : '立即创建'}}</el-button>
 				<el-button @click="resetForm('ruleForm')">重置</el-button>
 			</el-form-item>
 		</el-form>
@@ -34,11 +34,9 @@ import SimpleMDE from 'simplemde'
 export default {
 	data() {
 		return {
-			CREAT: 1,
-			MODIFY: 2,
-			status: null, // 状态：编辑或创建
+			edit: false, // 是否是编辑状态
 			query: this.$route.query,
-			detail: {}, // 详情
+			loading: false,
 			simplemde: null,
 			ruleForm: {
 				title: '',
@@ -50,7 +48,6 @@ export default {
 			rules: {
 				title: [
 					{ required: true, message: '请输入笔记标题', trigger: 'blur' },
-					{ min: 2, max: 5, message: '长度在 2 到 50 个字符', trigger: 'blur' }
 				],
 				date: [
 					{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }
@@ -60,7 +57,8 @@ export default {
 	},
 	created() {
 		if (this.query.id) {
-			this.status = this.MODIFY
+			this.edit = true
+			this.loading = true
 		}
 		this.initData()
 	},
@@ -68,23 +66,27 @@ export default {
 		this.simplemde = new SimpleMDE({ element: this.$refs['markdown'] })
 	},
 	methods: {
+		// 笔记详情转表单信息
+		detailToFrom(detail) {
+			this.ruleForm.title = detail.title
+			this.ruleForm.desc = detail.intro
+			this.ruleForm.categories = detail.categories.join(',')
+			this.ruleForm.tags = detail.tags.join(',')
+			this.ruleForm.date = new Date(detail.date)
+			this.simplemde.value(detail.markdown)
+		},
 		// 数据初始化
 		initData() {
-			if (this.status == this.MODIFY) { // 编辑
+			if (this.edit) { // 编辑
 				this.$API.postGet({ id: this.query.id }).then(res => {
-					let detail = res.data
-					this.ruleForm.title = detail.title
-					this.ruleForm.categories = detail.categories.join(',')
-					this.ruleForm.tags = detail.tags.join(',')
-					this.ruleForm.date = new Date(detail.date)
-					this.simplemde.value(detail.markdown)
+					this.loading = false
+					this.detailToFrom(red.data)
 				})
-			} else { // 创建
-
 			}
 		},
 		// 提交
 		submitForm(formName) {
+			
 			this.$refs[formName].validate((valid) => {
 				if (valid) { // 验证通过
 					let detail = {
@@ -96,11 +98,19 @@ export default {
 						markdown: this.simplemde.value(),
 						intro: this.ruleForm.desc
 					}
-					this.$API.postMod(detail).then(res => {
+					let api = this.edit ? this.$API.postMod : this.$API.postAdd
+					this.loading = true
+					api(detail).then(res => {
+						this.loading = false
 						this.$message({
-							message: '修改成功',
+							message: this.edit ? '修改成功' : '创建成功',
 							type: 'success'
 						})
+						if (!this.edit) { // 非编辑状态改为编辑状态
+							this.edit = true
+							this.$router.replace({ name: 'PostCreate', query: { id: res.data.id } })
+							this.detailToFrom(res.data)
+						}
 					})
 				} else {
 					return false;
