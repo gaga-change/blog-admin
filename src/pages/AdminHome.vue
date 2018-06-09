@@ -8,7 +8,7 @@
 			<el-scrollbar class="page-component__scroll ">
 				<el-aside width="200px">
 					<!-- 侧边栏 -->
-					<v-left-aside></v-left-aside>
+					<v-left-aside :navActive="navActive"></v-left-aside>
 				</el-aside>
 				<el-main>
 					<router-view/>
@@ -28,8 +28,18 @@ export default {
 	},
 	data() {
 		return {
+			navActive: '',
 			isCollapse: true
 		};
+	},
+	// beforeRouteEnter(to, from, next) {
+	// 	next(vm => {
+	// 		vm.navActive = to.name
+	// 	})
+	// },
+	beforeRouteUpdate(to, from, next) {
+		this.navActive = to.name
+		next()
 	},
 	methods: {
 		handleOpen(key, keyPath) {
@@ -60,7 +70,7 @@ export default {
     box-sizing: border-box;
 }
 .page-component__scroll {
-	width: 100%;
+    width: 100%;
     height: calc(100% - 60px);
     margin-top: 60px;
     .el-scrollbar__wrap {
@@ -74,10 +84,10 @@ export default {
     margin-top: 60px;
     color: #333;
     text-align: center;
-	background-color: #fff;
-	.el-menu {
-		height: 100%;
-	}
+    background-color: #fff;
+    .el-menu {
+        height: 100%;
+    }
 }
 
 .el-main {
@@ -85,6 +95,6 @@ export default {
     color: #333;
     margin-left: 200px;
     // text-align: center;
-	// line-height: 160px;
+    // line-height: 160px;
 }
 </style>

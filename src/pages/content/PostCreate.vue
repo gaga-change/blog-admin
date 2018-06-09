@@ -80,7 +80,7 @@ export default {
 			if (this.edit) { // 编辑
 				this.$API.postGet({ id: this.query.id }).then(res => {
 					this.loading = false
-					this.detailToFrom(red.data)
+					this.detailToFrom(res.data)
 				})
 			}
 		},

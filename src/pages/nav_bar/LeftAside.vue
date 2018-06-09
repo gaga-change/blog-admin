@@ -1,5 +1,5 @@
 <template>
-	<el-menu :default-active="navActive" class="el-menu-vertical-demo" :router="true">
+	<el-menu :default-active="active" class="el-menu-vertical-demo" :router="true">
 		<!-- <el-submenu index="1">
 			<template slot="title">
 				<i class="el-icon-location"></i>
@@ -19,10 +19,10 @@
 			</el-submenu>
 		</el-submenu> -->
 		<el-menu-item index="PostCreate" :route="{name: 'PostCreate'}">
-			<i class="el-icon-edit-outline" ></i>
+			<i class="el-icon-edit-outline"></i>
 			<span slot="title">发布笔记</span>
 		</el-menu-item>
-		<el-menu-item index="PostList" :route="{name: 'PostList'}" >
+		<el-menu-item index="PostList" :route="{name: 'PostList'}">
 			<i class="el-icon-tickets"></i>
 			<span slot="title">笔记列表</span>
 		</el-menu-item>
@@ -34,16 +34,25 @@
 </template>
 <script>
 export default {
-	data() {
-		return {
-			navActive: '1'
+	props: {
+		navActive: {
+			type: String,
+			default: ''
 		}
 	},
-	created( ) {
-		this.navActive = this.$route.name
+	data() {
+		return {
+			active: ''
+		}
 	},
-	mounted() {
-		// this.navActive = '3'
+	watch: {
+		// 监听路由变动
+		navActive(val) {
+			this.active = val
+		}
+	},
+	created() {
+		this.active = this.$route.name
 	}
 }
 </script>
