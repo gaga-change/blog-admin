@@ -19,6 +19,9 @@ Vue.prototype.$API = api.call(new Vue()) // 全局配置api
 
 // 全局路由钩子
 router.beforeEach(async (to, from, next) => {
+    if (to.meta && to.meta.title) {
+        document.title = to.meta.title
+    }
     if (to.name == 'UserLogin') return next()
     let vm = new Vue()
     let body = await vm.$API.user()
