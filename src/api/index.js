@@ -6,8 +6,9 @@ export default function () {
         user: params => get(`${base}/user`, params), // 获取当前登入用户
         login: params => post(`${base}/user/login`, params), // 登入
         posts: params => get(`${base}/posts`, params), // 登入
-        postGet: params => get(`${base}/post`, params), // 获取笔记
-        postDel: params => del(`${base}/clear`, params), // 删除笔记
+        postGet: params => get(`${base}/posts/${params.id}`, params), // 获取笔记
+        postDel: params => del(`${base}/posts/${params.id}`, params), // 删除笔记
+        postMod: params => put(`${base}/posts/${params.id}`, params), // 修改笔记
     }
 
     function get(url, params) {
@@ -20,6 +21,10 @@ export default function () {
 
     function del(url, params) {
         return axios.delete(url, {params}).then(middleware)
+    }
+    
+    function put(url, params) {
+        return axios.put(url, params).then(middleware)
     }
 
     function middleware(res) {

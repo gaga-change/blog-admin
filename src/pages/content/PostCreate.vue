@@ -12,8 +12,8 @@
 			</el-form-item>
 			<el-form-item label="发布时间" required>
 				<el-col :span="11">
-					<el-form-item prop="date1">
-						<el-date-picker type="datetime" placeholder="选择日期时间" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+					<el-form-item prop="date">
+						<el-date-picker type="datetime" placeholder="选择日期时间" v-model="ruleForm.date" style="width: 100%;"></el-date-picker>
 					</el-form-item>
 				</el-col>
 			</el-form-item>
@@ -22,7 +22,7 @@
 				<el-input type="textarea" v-model="ruleForm.desc"></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+				<el-button type="primary" @click="submitForm('ruleForm')">{{status == 2 ? '立即修改' : '立即创建'}}</el-button>
 				<el-button @click="resetForm('ruleForm')">重置</el-button>
 			</el-form-item>
 		</el-form>
@@ -39,34 +39,22 @@ export default {
 			status: null, // 状态：编辑或创建
 			query: this.$route.query,
 			detail: {}, // 详情
-			simplemde: null, 
+			simplemde: null,
 			ruleForm: {
 				title: '',
 				categories: '',
 				tags: '',
-				date1: '',
-				delivery: false,
-				type: [],
-				resource: '',
-				desc: ''
+				date: '',
+				desc: '',
 			},
 			rules: {
 				title: [
 					{ required: true, message: '请输入笔记标题', trigger: 'blur' },
-					{ min: 3, max: 5, message: '长度在 3 到 50 个字符', trigger: 'blur' }
+					{ min: 2, max: 5, message: '长度在 2 到 50 个字符', trigger: 'blur' }
 				],
-				date1: [
+				date: [
 					{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }
 				],
-				type: [
-					{ type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-				],
-				resource: [
-					{ required: true, message: '请选择活动资源', trigger: 'change' }
-				],
-				desc: [
-					{ required: true, message: '请填写活动形式', trigger: 'blur' }
-				]
 			}
 		};
 	},
@@ -88,19 +76,33 @@ export default {
 					this.ruleForm.title = detail.title
 					this.ruleForm.categories = detail.categories.join(',')
 					this.ruleForm.tags = detail.tags.join(',')
-					this.ruleForm.date1 = new Date(detail.date)
+					this.ruleForm.date = new Date(detail.date)
 					this.simplemde.value(detail.markdown)
 				})
 			} else { // 创建
-				
+
 			}
 		},
+		// 提交
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
-				if (valid) {
-					alert('submit!');
+				if (valid) { // 验证通过
+					let detail = {
+						id: this.query.id,
+						title: this.ruleForm.title,
+						categories: this.ruleForm.categories,
+						tags: this.ruleForm.tags,
+						date: this.ruleForm.date,
+						markdown: this.simplemde.value(),
+						intro: this.ruleForm.desc
+					}
+					this.$API.postMod(detail).then(res => {
+						this.$message({
+							message: '修改成功',
+							type: 'success'
+						})
+					})
 				} else {
-					console.log('error submit!!');
 					return false;
 				}
 			});
