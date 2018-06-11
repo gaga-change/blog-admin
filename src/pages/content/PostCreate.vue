@@ -23,7 +23,7 @@
 			</el-form-item>
 			<el-form-item>
 				<el-button type="primary" @click="submitForm('ruleForm')">{{edit ? '立即修改' : '立即创建'}}</el-button>
-				<el-button @click="resetForm('ruleForm')">重置</el-button>
+				<!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
 			</el-form-item>
 		</el-form>
 
@@ -60,10 +60,9 @@ export default {
 			this.edit = true
 			this.loading = true
 		}
-		this.initData()
 	},
 	mounted() {
-		this.simplemde = new SimpleMDE({ element: this.$refs['markdown'] })
+		this.initData()
 	},
 	methods: {
 		// 笔记详情转表单信息
@@ -73,7 +72,8 @@ export default {
 			this.ruleForm.categories = detail.categories.join(',')
 			this.ruleForm.tags = detail.tags.join(',')
 			this.ruleForm.date = new Date(detail.date)
-			this.simplemde.value(detail.markdown)
+			this.simplemde = new SimpleMDE({ element: this.$refs['markdown'], initialValue: detail.markdown })
+			// this.simplemde.value()
 		},
 		// 数据初始化
 		initData() {
@@ -82,11 +82,14 @@ export default {
 					this.loading = false
 					this.detailToFrom(res.data)
 				})
+			} else {
+				this.simplemde = new SimpleMDE({ element: this.$refs['markdown'], initialValue: '## 标题' })
+
 			}
 		},
 		// 提交
 		submitForm(formName) {
-			
+
 			this.$refs[formName].validate((valid) => {
 				if (valid) { // 验证通过
 					let detail = {
