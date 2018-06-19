@@ -10,6 +10,7 @@ export default function () {
         postDel: params => del(`${base}/posts/${params.id}`, params), // 删除笔记
         postMod: params => put(`${base}/posts/${params.id}`, params), // 修改笔记
         postAdd: params => post(`${base}/posts`, params), // 增加笔记
+        logout: params => get(`${base}/user/logout`, params), // 用户退出
     }
 
     function get(url, params) {
