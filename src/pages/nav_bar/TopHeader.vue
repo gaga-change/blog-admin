@@ -1,6 +1,6 @@
 <template>
     <div class="top-header">
-        <a href="#">喜欢JS的无名小站</a>
+        <router-link to="/">喜欢JS的无名小站</router-link>
     </div>
 </template>
 <style lang="less">

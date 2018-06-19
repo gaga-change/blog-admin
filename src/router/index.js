@@ -10,6 +10,7 @@ Vue.use(Router)
 
 export default new Router({
 	mode: 'history',
+	base: '/admin/',
 	routes: [
 		{
 			path: '/',
@@ -48,6 +49,7 @@ export default new Router({
 			meta: {
 				title: '登入'
 			}
-		}
+		},
+		{ path: '*', redirect: '/' }
 	]
 })
