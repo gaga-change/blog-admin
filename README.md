@@ -1,6 +1,7 @@
 # 博客系统后台管理页面（Vue）
 
-[点此查看运行效果](http://blog.junn.top)
+[点此查看运行效果 - 前台](http://blog.junn.top)
+[点此查看运行效果 - 后台](http://blog.junn.top/admin)
 
 博客系统API & 前台页面: https://github.com/gaga-change/gaga-change
 
