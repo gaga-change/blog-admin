@@ -12,10 +12,12 @@ export default function () {
         postAdd: params => post(`${base}/posts`, params), // 增加笔记
         logout: params => get(`${base}/user/logout`, params), // 用户退出
         regist: params => post(`${base}/user`, params), // 注册
+        getSite: params => get(`${base}/site`, params), // 获取站点信息
+        setSite: params => post(`${base}/site`, params), // 配置站点信息
     }
 
     function get(url, params) {
-        return axios.get(url, {params}).then(middleware)
+        return axios.get(url, { params }).then(middleware)
     }
 
     function post(...args) {
@@ -23,9 +25,9 @@ export default function () {
     }
 
     function del(url, params) {
-        return axios.delete(url, {params}).then(middleware)
+        return axios.delete(url, { params }).then(middleware)
     }
-    
+
     function put(url, params) {
         return axios.put(url, params).then(middleware)
     }
@@ -37,6 +39,9 @@ export default function () {
                 message: res.data.err,
                 type: 'error'
             })
+        }
+        if (res.data.login) {
+            location.href = '/admin/login'
         }
         return res.data
     }
