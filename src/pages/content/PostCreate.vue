@@ -1,5 +1,5 @@
 <template>
-	<div  v-loading="loading">
+	<div v-loading="loading">
 		<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 			<el-form-item label="笔记标题" prop="title">
 				<el-input v-model="ruleForm.title" maxlength=50></el-input>
@@ -64,6 +64,15 @@ export default {
 	mounted() {
 		this.initData()
 	},
+	beforeRouteUpdate(to, from, next) {
+		if (!to.query.id) {
+			this.edit = false
+			this.$refs['ruleForm'].resetFields()
+			this.ruleForm.desc = ''
+			this.simplemde.value('## 标题')
+		}
+		next()
+	},
 	methods: {
 		// 笔记详情转表单信息
 		detailToFrom(detail) {
@@ -72,8 +81,6 @@ export default {
 			this.ruleForm.categories = detail.categories.join(',')
 			this.ruleForm.tags = detail.tags.join(',')
 			this.ruleForm.date = new Date(detail.date)
-			this.simplemde = new SimpleMDE({ element: this.$refs['markdown'], initialValue: detail.markdown })
-			// this.simplemde.value()
 		},
 		// 数据初始化
 		initData() {
@@ -81,10 +88,10 @@ export default {
 				this.$API.postGet({ id: this.query.id }).then(res => {
 					this.loading = false
 					this.detailToFrom(res.data)
+					this.simplemde = new SimpleMDE({ element: this.$refs['markdown'], initialValue: res.data.markdown })
 				})
 			} else {
 				this.simplemde = new SimpleMDE({ element: this.$refs['markdown'], initialValue: '## 标题' })
-
 			}
 		},
 		// 提交
@@ -112,6 +119,7 @@ export default {
 						if (!this.edit) { // 非编辑状态改为编辑状态
 							this.edit = true
 							this.$router.replace({ name: 'PostCreate', query: { id: res.data.id } })
+							this.query.id = res.data.id
 							this.detailToFrom(res.data)
 						}
 					})
