@@ -11,6 +11,7 @@ export default function () {
         postMod: params => put(`${base}/posts/${params.id}`, params), // 修改笔记
         postAdd: params => post(`${base}/posts`, params), // 增加笔记
         logout: params => get(`${base}/user/logout`, params), // 用户退出
+        regist: params => post(`${base}/user`, params), // 注册
     }
 
     function get(url, params) {

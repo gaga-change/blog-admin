@@ -9,7 +9,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">登入</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
+                <el-button @click="register">注册</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -54,18 +54,43 @@ export default {
                 if (valid) {
                     this.login()
                 } else {
-                    console.log('error submit!!')
                     return false
                 }
             })
         },
+        // 注册
+        register() {
+            this.$refs['ruleForm'].validate((valid) => {
+                if (valid) {
+                    this.$API.regist({
+                        username: this.ruleForm.account,
+                        password: this.ruleForm.pass
+                    }).then(res => {
+                        if (res.err) {
+                            this.resetForm('ruleForm')
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                message: `用户：${this.ruleForm.account} 注册成功`,
+                                type: 'success'
+                            })
+                            this.$router.replace({ path: '/' })
+                        }
+                    })
+                } else {
+                    return false
+                }
+            })
+
+        },
+        // 登入
         login() {
             this.$API.login({
                 username: this.ruleForm.account,
                 password: this.ruleForm.pass
             }).then(res => {
                 if (res.data) {
-                    this.$router.replace({path: '/'})
+                    this.$router.replace({ path: '/' })
                 }
             })
         },
