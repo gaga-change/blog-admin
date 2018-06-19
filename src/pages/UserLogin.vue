@@ -34,8 +34,8 @@ export default {
         }
         return {
             ruleForm: {
-                pass: '',
-                account: '',
+                pass: 'test',
+                account: 'test',
             },
             rules: {
                 pass: [
