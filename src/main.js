@@ -22,14 +22,15 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta && to.meta.title) {
         document.title = to.meta.title
     }
-    if (to.name == 'UserLogin') return next()
-    let vm = new Vue()
-    let body = await vm.$API.user()
-    if (body.data) {
-        next()
-    } else {
-        next({name: 'UserLogin'})
-    }
+    // if (to.name == 'UserLogin') return next()
+    // let vm = new Vue()
+    // let body = await vm.$API.user()
+    // if (body.data) {
+    //     next()
+    // } else {
+    //     next({name: 'UserLogin'})
+    // }
+    next()
 })
 /* eslint-disable no-new */
 new Vue({
