@@ -38,21 +38,15 @@ npm run build --report
 ```
 ## 部署时nginx 配置（大致）
 
-> router采用的是`history`模式，所以在nginx下需要动些手脚。
+> router采用的是`history`模式，所以在nginx下需要进行相关配置。
 
 ``` nginx
-server { 
+server {
     listen 80;
-    server_name blog.junn.top;
-    location /api {
-        proxy_pass http://blog.api.junn.top;
-    }
+    server_name www.yanjd.top;
     location /admin {
-        root   /usr/share/nginx/html/blog-admin;
-        try_files $uri $uri/ /blog-admin/index.html;
-    }
-    location = /blog-admin/index.html {
-        root   /usr/share/nginx/html;
+        alias /var/www/html;
+        try_files $uri $uri/ /admin/index.html;
     }
     location / {
         proxy_pass http://blog.api.junn.top;
