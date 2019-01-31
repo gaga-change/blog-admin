@@ -34,7 +34,7 @@ export default {
 			rules: {
 				header: [
 					{ required: true, message: '请输入站点标题', trigger: 'blur' },
-					{ min: 4, max: 25, message: '长度在 4 到 25 个字符', trigger: 'blur' }
+					{ min: 1, max: 25, message: '长度在 1 到 25 个字符', trigger: 'blur' }
 				]
 			}
 		};
