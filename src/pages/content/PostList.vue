@@ -66,8 +66,8 @@ export default {
 				this.loading = false
 				let items = res.data.list || []
 				items.forEach(item => {
-					let tags = item.tags.join(",")
-					let categories = item.categories.join(",")
+					item.tags = item.tags.join(",")
+					item.categories = item.categories.join(",")
 					let date = new Date(item.date)
 					let str = []
 					str.push(this.doubleNum(date.getFullYear()))

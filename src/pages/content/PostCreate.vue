@@ -2,7 +2,7 @@
 	<div v-loading="loading">
 		<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 			<el-form-item label="笔记标题" prop="title">
-				<el-input v-model="ruleForm.title" maxlength=50></el-input>
+				<el-input v-model="ruleForm.title" maxlength=300></el-input>
 			</el-form-item>
 			<el-form-item label="笔记分类">
 				<el-input v-model="ruleForm.categories"></el-input>
