@@ -1,4 +1,8 @@
 module.exports = {
+  publicPath:
+    process.env.NODE_ENV === "production"
+      ? "//cdn.yanjd.top/blog/admin/static/"
+      : "/",
   devServer: {
     host: "localhost",
     port: 8080,
