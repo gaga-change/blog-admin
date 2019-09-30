@@ -28,13 +28,11 @@
 npm install
 
 # serve with hot reload at localhost:8080 运行开发环境
-npm run dev
+npm run serve
 
 # build for production with minification 打包
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 ## 部署时nginx 配置（大致）
 

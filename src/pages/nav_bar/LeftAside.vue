@@ -1,6 +1,10 @@
 <template>
-	<el-menu :default-active="active" class="el-menu-vertical-demo" :router="true">
-		<!-- <el-submenu index="1">
+  <el-menu
+    :default-active="active"
+    class="el-menu-vertical-demo"
+    :router="true"
+  >
+    <!-- <el-submenu index="1">
 			<template slot="title">
 				<i class="el-icon-location"></i>
 				<span slot="title">导航一</span>
@@ -18,42 +22,41 @@
 				<el-menu-item index="1-4-1">选项1</el-menu-item>
 			</el-submenu>
 		</el-submenu> -->
-		<el-menu-item index="PostCreate" :route="{name: 'PostCreate'}">
-			<i class="el-icon-edit-outline"></i>
-			<span slot="title">发布笔记</span>
-		</el-menu-item>
-		<el-menu-item index="PostList" :route="{name: 'PostList'}">
-			<i class="el-icon-tickets"></i>
-			<span slot="title">笔记列表</span>
-		</el-menu-item>
-		<el-menu-item index="WebSet" :route="{name: 'WebSet'}">
-			<i class="el-icon-setting"></i>
-			<span slot="title">站点设置</span>
-		</el-menu-item>
-	</el-menu>
+    <el-menu-item index="PostCreate" :route="{ name: 'PostCreate' }">
+      <i class="el-icon-edit-outline"></i>
+      <span slot="title">发布笔记</span>
+    </el-menu-item>
+    <el-menu-item index="PostList" :route="{ name: 'PostList' }">
+      <i class="el-icon-tickets"></i>
+      <span slot="title">笔记列表</span>
+    </el-menu-item>
+    <el-menu-item index="WebSet" :route="{ name: 'WebSet' }">
+      <i class="el-icon-setting"></i>
+      <span slot="title">站点设置</span>
+    </el-menu-item>
+  </el-menu>
 </template>
 <script>
 export default {
-	props: {
-		navActive: {
-			type: String,
-			default: ''
-		}
-	},
-	data() {
-		return {
-			active: ''
-		}
-	},
-	watch: {
-		// 监听路由变动
-		navActive(val) {
-			this.active = val
-		}
-	},
-	created() {
-		this.active = this.$route.name
-	}
-}
+  props: {
+    navActive: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      active: ""
+    };
+  },
+  watch: {
+    // 监听路由变动
+    navActive(val) {
+      this.active = val;
+    }
+  },
+  created() {
+    this.active = this.$route.name;
+  }
+};
 </script>
-
