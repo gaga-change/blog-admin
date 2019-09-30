@@ -1,5 +1,13 @@
+import http from "./http";
 import axios from "axios";
 const base = "/api";
+
+export const authCurrent = params => http.get("/api/auth/current", { params });
+export const authLogin = params => http.post("/api/auth/login", params);
+export const authLogout = params => http.post("/api/auth/logout", params);
+/** 获取用户总数 */
+export const usersTotal = params => http.get("/api/users/total", { params });
+
 export default function() {
   const vm = this;
   const api = {

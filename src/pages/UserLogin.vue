@@ -1,112 +1,84 @@
 <template>
   <div class="login-content">
+    <h2>博客管理系统</h2>
     <el-form
-      :model="ruleForm"
+      :model="formData"
       status-icon
       :rules="rules"
-      ref="ruleForm"
+      ref="form"
       label-width="100px"
-      class="demo-ruleForm"
     >
-      <el-form-item label="用户名" prop="account">
-        <el-input v-model="ruleForm.account"></el-input>
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="formData.username"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="pass">
+      <el-form-item label="密码" prop="password">
         <el-input
           type="password"
-          v-model="ruleForm.pass"
+          v-model="formData.password"
           auto-complete="off"
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >登入</el-button
+        <el-button v-if="!noUser" type="primary" @click="submitForm"
+          >登 入</el-button
         >
-        <el-button @click="register">注册</el-button>
+        <el-button v-else type="primary" @click="submitForm"
+          >注册并登录</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { authLogin, usersTotal } from "@/api";
 export default {
   data() {
-    var checkAccount = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("用户名不能为空"));
-      } else {
-        callback();
-      }
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        callback();
-      }
-    };
     return {
-      ruleForm: {
-        pass: "",
-        account: ""
+      noUser: false,
+      formData: {
+        password: undefined,
+        username: undefined
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        account: [{ validator: checkAccount, trigger: "blur" }]
+        username: [
+          { required: true, message: "用户名不能为空", trigger: "blur" }
+        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
   },
+  created() {
+    usersTotal().then(res => {
+      if (!res) return;
+      const { total } = res;
+      if (total === 0) {
+        this.noUser = true;
+      }
+    });
+  },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+    submitForm() {
+      this.$refs["form"].validate(valid => {
         if (valid) {
           this.login();
-        } else {
-          return false;
-        }
-      });
-    },
-    // 注册
-    register() {
-      this.$refs["ruleForm"].validate(valid => {
-        if (valid) {
-          this.$API
-            .regist({
-              username: this.ruleForm.account,
-              password: this.ruleForm.pass
-            })
-            .then(res => {
-              if (res.err) {
-                this.resetForm("ruleForm");
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: `用户：${this.ruleForm.account} 注册成功`,
-                  type: "success"
-                });
-                this.$router.replace({ path: "/" });
-              }
-            });
-        } else {
-          return false;
         }
       });
     },
     // 登入
     login() {
-      this.$API
-        .login({
-          username: this.ruleForm.account,
-          password: this.ruleForm.pass
-        })
-        .then(res => {
-          if (res.data) {
-            this.$router.replace({ path: "/" });
-          }
-        });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+      console.log(this.formData);
+      authLogin({ ...this.formData }).then(res => {
+        if (!res) return;
+        if (this.noUser) {
+          this.$message({
+            showClose: true,
+            message: `用户：${this.formData.username} 注册成功`,
+            type: "success"
+          });
+        }
+        this.$router.replace({ path: "/" });
+      });
     }
   }
 };
