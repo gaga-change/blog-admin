@@ -7,15 +7,15 @@
   </div>
 </template>
 <script>
+import { authLogout } from "@/api";
 export default {
   data() {
     return {};
   },
   methods: {
     logout() {
-      this.$API.logout().then(() => {
-        this.$router.replace({ name: "UserLogin" });
-      });
+      this.$router.replace({ name: "UserLogin" });
+      authLogout();
     }
   }
 };

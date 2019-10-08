@@ -19,7 +19,11 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="!noUser" type="primary" @click="submitForm"
+        <el-button
+          v-if="!noUser"
+          type="primary"
+          @click="submitForm"
+          :loading="authLoginLoading"
           >登 入</el-button
         >
         <el-button v-else type="primary" @click="submitForm"
@@ -35,6 +39,7 @@ import { authLogin, usersTotal } from "@/api";
 export default {
   data() {
     return {
+      authLoginLoading: false,
       noUser: false,
       formData: {
         password: undefined,
@@ -67,8 +72,9 @@ export default {
     },
     // 登入
     login() {
-      console.log(this.formData);
+      this.authLoginLoading = true;
       authLogin({ ...this.formData }).then(res => {
+        this.authLoginLoading = false;
         if (!res) return;
         if (this.noUser) {
           this.$message({
