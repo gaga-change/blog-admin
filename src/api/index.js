@@ -7,6 +7,7 @@ export const authLogin = params => http.post("/api/auth/login", params);
 export const authLogout = params => http.get("/api/auth/logout", params);
 /** 获取用户总数 */
 export const usersTotal = params => http.get("/api/users/total", { params });
+export const tagsList = params => http.get("/api/tags", { params });
 
 export default function() {
   const vm = this;

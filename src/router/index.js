@@ -5,12 +5,13 @@ import UserLogin from "@/pages/UserLogin";
 import PostCreate from "@/pages/content/PostCreate";
 import PostList from "@/pages/content/PostList";
 import WebSet from "@/pages/content/WebSet";
+import TagList from "@/pages/tag/TagList";
 
 Vue.use(Router);
 
 export default new Router({
-  mode: "history",
-  base: "/admin/",
+  mode: "hash",
+  base: "",
   routes: [
     {
       path: "/",
@@ -22,6 +23,14 @@ export default new Router({
           component: PostCreate,
           meta: {
             title: "发布笔记"
+          }
+        },
+        {
+          path: "TagList",
+          name: "TagList",
+          component: TagList,
+          meta: {
+            title: "标签列表"
           }
         },
         {
