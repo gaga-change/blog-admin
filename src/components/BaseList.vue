@@ -8,7 +8,7 @@
       >
       </search-form>
     </div>
-    <div class="f12">
+    <div class="f12 mt15">
       <slot name="btns"></slot>
     </div>
     <div class="mt15">

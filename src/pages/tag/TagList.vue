@@ -29,7 +29,7 @@
             tagFormDialogVisible = true;
           "
         >
-          新建质检记录
+          新建标签
         </el-button>
       </template>
     </base-list>

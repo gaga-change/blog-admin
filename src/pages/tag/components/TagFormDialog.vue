@@ -2,7 +2,7 @@
   <div class="">
     <!-- 600px【小型，单列】 70% 【中型，双列】-->
     <el-dialog
-      title="新建标签"
+      :title="rowData._id ? '编辑标签' : '新建标签'"
       :visible="visible"
       width="600px"
       :before-close="handleClose"
