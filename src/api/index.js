@@ -8,6 +8,10 @@ export const authLogout = params => http.get("/api/auth/logout", params);
 /** 获取用户总数 */
 export const usersTotal = params => http.get("/api/users/total", { params });
 export const tagsList = params => http.get("/api/tags", { params });
+export const tagsCreate = params => http.post("/api/tags", params);
+export const tagsShow = (params, id) => http.get(`/api/tags/${id}`, { params });
+export const tagsDestroy = id => http.delete(`/api/tags/${id}`);
+export const tagsUpdate = (params, id) => http.put(`/api/tags/${id}`, params);
 
 export default function() {
   const vm = this;

@@ -16,4 +16,9 @@ export default {
   overflow-y: hidden;
   height: 100%;
 }
+.el-divider__text,
+.el-link {
+  font-size: 12px;
+  line-height: 1.6;
+}
 </style>

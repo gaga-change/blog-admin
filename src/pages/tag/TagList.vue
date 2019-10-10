@@ -12,43 +12,52 @@
         <el-link
           type="primary"
           @click="
-            $router.push({
-              path: `/qualityTesting/detail`,
-              query: { id: scope.row.id }
-            })
+            nowRow = scope.row;
+            tagFormDialogVisible = true;
           "
-          >详情</el-link
+          >编辑</el-link
         >
         <el-divider direction="vertical"></el-divider>
+        <el-link type="primary" @click="handleDelete(scope.row)">删除</el-link>
       </template>
       <template slot="btns">
-        <el-button type="primary" size="mini" @click="handleCreate">
+        <el-button
+          type="primary"
+          size="mini"
+          @click="
+            nowRow = null;
+            tagFormDialogVisible = true;
+          "
+        >
           新建质检记录
         </el-button>
       </template>
     </base-list>
+    <tag-form-dialog
+      :visible.sync="tagFormDialogVisible"
+      :row="nowRow"
+      @submited="getTableData"
+    />
   </div>
 </template>
 
 <script>
-import { tagsList } from "@/api";
+import TagFormDialog from "./components/TagFormDialog";
+import { tagsList, tagsDestroy } from "@/api";
 const tableConfig = [
-  { label: "名称", prop: "orderCode" },
+  { label: "名称", prop: "name" },
   { label: "备注", prop: "remark" },
-  { label: "创建时间", prop: "createAt", type: "time" }
+  { label: "创建时间", prop: "createdAt", type: "time" }
 ];
-const searchConfig = [
-  { label: "质检单号", prop: "orderCode" },
-  {
-    label: "创建时间",
-    prop: "createTimeArea",
-    props: ["startDate", "endDate"],
-    type: "timeArea"
-  }
-];
+
+const searchConfig = [{ label: "名称", prop: "name" }];
+
 export default {
+  components: { TagFormDialog },
   data() {
     return {
+      tagFormDialogVisible: false,
+      nowRow: null,
       tableConfig,
       searchConfig,
       listApi: tagsList,
@@ -57,6 +66,16 @@ export default {
     };
   },
   methods: {
+    /** 删除 */
+    handleDelete(row) {
+      this.$apiConfirm(`是否确定删除【${row.name}】？`, () =>
+        tagsDestroy(row._id)
+      ).then(res => {
+        if (!res) return;
+        this.$message.success("操作成功！");
+        this.getTableData();
+      });
+    },
     /** 刷新列表 */
     getTableData() {
       this.$refs["baseList"].fetchData();

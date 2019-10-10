@@ -9,6 +9,9 @@ let newAxios = axios.create({
 newAxios.interceptors.response.use(
   function(response) {
     let data = response.data;
+    if (response.status === 204) {
+      data = {};
+    }
     return data;
   },
   function(error) {
