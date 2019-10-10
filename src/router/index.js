@@ -6,6 +6,7 @@ import PostCreate from "@/pages/content/PostCreate";
 import PostList from "@/pages/content/PostList";
 import WebSet from "@/pages/content/WebSet";
 import TagList from "@/pages/tag/TagList";
+import CategoryList from "@/pages/category/CategoryList";
 
 Vue.use(Router);
 
@@ -26,11 +27,19 @@ export default new Router({
           }
         },
         {
+          path: "CategoryList",
+          name: "CategoryList",
+          component: CategoryList,
+          meta: {
+            title: "分类管理"
+          }
+        },
+        {
           path: "TagList",
           name: "TagList",
           component: TagList,
           meta: {
-            title: "标签列表"
+            title: "标签管理"
           }
         },
         {

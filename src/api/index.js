@@ -13,6 +13,14 @@ export const tagsShow = (params, id) => http.get(`/api/tags/${id}`, { params });
 export const tagsDestroy = id => http.delete(`/api/tags/${id}`);
 export const tagsUpdate = (params, id) => http.put(`/api/tags/${id}`, params);
 
+export const categoriesList = params => http.get("/api/categories", { params });
+export const categoriesCreate = params => http.post("/api/categories", params);
+export const categoriesShow = (params, id) =>
+  http.get(`/api/categories/${id}`, { params });
+export const categoriesDestroy = id => http.delete(`/api/categories/${id}`);
+export const categoriesUpdate = (params, id) =>
+  http.put(`/api/categories/${id}`, params);
+
 export default function() {
   const vm = this;
   const api = {

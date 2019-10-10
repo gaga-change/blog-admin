@@ -30,6 +30,10 @@
       <i class="el-icon-tickets"></i>
       <span slot="title">笔记列表</span>
     </el-menu-item>
+    <el-menu-item index="PostList" :route="{ name: 'CategoryList' }">
+      <i class="el-icon-tickets"></i>
+      <span slot="title">分类管理</span>
+    </el-menu-item>
     <el-menu-item index="PostList" :route="{ name: 'TagList' }">
       <i class="el-icon-tickets"></i>
       <span slot="title">标签管理</span>
