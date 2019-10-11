@@ -30,18 +30,18 @@
       <i class="el-icon-tickets"></i>
       <span slot="title">笔记列表</span>
     </el-menu-item>
-    <el-menu-item index="PostList" :route="{ name: 'CategoryList' }">
+    <el-menu-item index="CategoryList" :route="{ name: 'CategoryList' }">
       <i class="el-icon-tickets"></i>
       <span slot="title">分类管理</span>
     </el-menu-item>
-    <el-menu-item index="PostList" :route="{ name: 'TagList' }">
+    <el-menu-item index="TagList" :route="{ name: 'TagList' }">
       <i class="el-icon-tickets"></i>
       <span slot="title">标签管理</span>
     </el-menu-item>
-    <el-menu-item index="WebSet" :route="{ name: 'WebSet' }">
+    <!-- <el-menu-item index="WebSet" :route="{ name: 'WebSet' }">
       <i class="el-icon-setting"></i>
       <span slot="title">站点设置</span>
-    </el-menu-item>
+    </el-menu-item> -->
   </el-menu>
 </template>
 <script>

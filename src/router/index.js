@@ -3,9 +3,9 @@ import Router from "vue-router";
 import AdminHome from "@/pages/AdminHome";
 import UserLogin from "@/pages/UserLogin";
 import PostCreate from "@/pages/content/PostCreate";
-import PostList from "@/pages/content/PostList";
 import WebSet from "@/pages/content/WebSet";
 import TagList from "@/pages/tag/TagList";
+import PostList from "@/pages/post/PostList";
 import CategoryList from "@/pages/category/CategoryList";
 
 Vue.use(Router);
@@ -27,6 +27,14 @@ export default new Router({
           }
         },
         {
+          path: "PostList",
+          name: "PostList",
+          component: PostList,
+          meta: {
+            title: "笔记管理"
+          }
+        },
+        {
           path: "CategoryList",
           name: "CategoryList",
           component: CategoryList,
@@ -40,14 +48,6 @@ export default new Router({
           component: TagList,
           meta: {
             title: "标签管理"
-          }
-        },
-        {
-          path: "post_list",
-          name: "PostList",
-          component: PostList,
-          meta: {
-            title: "笔记列表"
           }
         },
         {
