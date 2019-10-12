@@ -27,9 +27,16 @@ newAxios.interceptors.response.use(
     } else if (data.login) {
       location.href = "/admin/login";
     } else {
+      switch (data.code) {
+        case 11000:
+          message = "该对象已存在，不允许重复添加！";
+          break;
+        default:
+          message = "系统异常";
+      }
       Message({
         type: "error",
-        message: message || "系统异常",
+        message: message,
         duration: 3000
       });
     }

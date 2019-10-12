@@ -71,13 +71,13 @@ export default {
     },
     /** 可选 返回列表添加字段 */
     parseData(res) {
-      let data = res.data.list || [];
-      let total = res.data.total;
-      data.forEach(v => {
-        v.updateLockStatusOutLoading = false;
-        v.updateLockStatusInLoading = false;
+      let list = res.list || [];
+      let total = res.total;
+      list.forEach(v => {
+        v.tagsText = v.tags.map(v => v.name).join(",");
+        v.categoryText = v.category && v.category.name;
       });
-      return { data, total };
+      return { list, total };
     },
     /** 新建 */
     handleCreate() {

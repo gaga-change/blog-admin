@@ -80,16 +80,6 @@ export default {
     getTableData() {
       this.$refs["baseList"].fetchData();
     },
-    /** 可选 返回列表添加字段 */
-    parseData(res) {
-      let data = res.data.list || [];
-      let total = res.data.total;
-      data.forEach(v => {
-        v.updateLockStatusOutLoading = false;
-        v.updateLockStatusInLoading = false;
-      });
-      return { data, total };
-    },
     /** 新建 */
     handleCreate() {
       this.$router.push({ path: "/qualityTesting/create" });

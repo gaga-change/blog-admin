@@ -21,4 +21,9 @@ export default {
   font-size: 12px;
   line-height: 1.6;
 }
+.el-select-dropdown__item {
+  font-size: 12px;
+  line-height: 28px;
+  height: 28px;
+}
 </style>
