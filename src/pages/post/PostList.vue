@@ -7,6 +7,7 @@
       :api="listApi"
       :showControl="true"
       :controlWidth="160"
+      :parseData="parseData"
     >
       <template slot-scope="scope">
         <el-link
@@ -46,6 +47,8 @@ import PostFormDialog from "./components/PostFormDialog";
 import { postsList, postsDestroy } from "@/api";
 const tableConfig = [
   { label: "标题", prop: "title" },
+  { label: "分类", prop: "categoryText" },
+  { label: "标签", prop: "tagsText" },
   { label: "创建时间", prop: "createdAt", type: "time" }
 ];
 
@@ -81,13 +84,13 @@ export default {
     },
     /** 可选 返回列表添加字段 */
     parseData(res) {
-      let data = res.data.list || [];
-      let total = res.data.total;
-      data.forEach(v => {
-        v.updateLockStatusOutLoading = false;
-        v.updateLockStatusInLoading = false;
+      let list = res.list || [];
+      let total = res.total;
+      list.forEach(v => {
+        v.tagsText = v.tags.map(v => v.name).join(",");
+        v.categoryText = v.category && v.category.name;
       });
-      return { data, total };
+      return { list, total };
     },
     /** 新建 */
     handleCreate() {

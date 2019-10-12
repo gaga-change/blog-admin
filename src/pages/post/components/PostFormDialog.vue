@@ -23,7 +23,6 @@
               placeholder="请输入标题"
             ></el-input>
           </el-form-item>
-          <!-- 下拉框 -->
           <el-form-item label="分类" prop="category">
             <el-select
               :loading="categoriesListLoading"
@@ -33,6 +32,22 @@
             >
               <el-option
                 v-for="item in categories"
+                :key="item._id"
+                :label="item.name"
+                :value="item._id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="标签" prop="tags">
+            <el-select
+              :loading="tagsListLoading"
+              v-model="formData.tags"
+              placeholder="请选择分类"
+              multiple
+              clearable
+            >
+              <el-option
+                v-for="item in tags"
                 :key="item._id"
                 :label="item.name"
                 :value="item._id"
@@ -52,7 +67,7 @@
 </template>
 
 <script>
-import { postsCreate, postsUpdate, categoriesList } from "@/api";
+import { postsCreate, postsUpdate, categoriesList, tagsList } from "@/api";
 export default {
   props: {
     visible: {
@@ -75,31 +90,34 @@ export default {
     /** 监听数据切换，重置表单 */
     visible(val) {
       if (!val) return;
+      let temp = { ...this.rowData };
+      temp.category = temp.category._id;
+      temp.tags = temp.tags.map(v => v._id);
       Object.keys(this.formData).forEach(key => {
-        this.$set(
-          this.formData,
-          key,
-          this.rowData[key] === null ? undefined : this.rowData[key]
-        );
+        this.formData[key] = temp[key];
       });
     }
   },
   data() {
     return {
       categoriesListLoading: true,
+      tagsListLoading: false,
       categories: [],
+      tags: [],
       loading: false,
       formData: {
         //  ... 表单字段
         title: undefined,
-        remark: undefined
+        category: undefined,
+        tags: undefined
       },
       rules: {
         //  ... 表单校验
         title: [
           { required: true, message: "必填项", trigger: "blur" },
           { min: 0, max: 200, message: "不能超过200个字符", trigger: "blur" }
-        ]
+        ],
+        category: [{ required: true, message: "必填项", trigger: "blur" }]
       }
     };
   },
@@ -109,6 +127,12 @@ export default {
       this.categoriesListLoading = false;
       if (!res) return;
       this.categories = res.list;
+    });
+    this.tagsListLoading = true;
+    tagsList({ pageSize: 999 }).then(res => {
+      this.tagsListLoading = false;
+      if (!res) return;
+      this.tags = res.list;
     });
   },
   methods: {
@@ -140,11 +164,12 @@ export default {
     },
     /** 关闭弹窗 */
     close() {
-      // 初始化表单
-      this.$refs["form"] && this.$refs["form"].resetFields();
-      // 初始化没有挂载到表单的数据
-      // ...
       this.visible && this.$emit("update:visible", false);
+      this.$nextTick(() => {
+        Object.keys(this.formData).forEach(key => {
+          this.formData[key] = undefined;
+        });
+      });
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
