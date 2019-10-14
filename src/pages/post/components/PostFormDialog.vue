@@ -54,6 +54,21 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="图标">
+            <el-upload
+              action="/api/upload"
+              :on-change="handleChange"
+              :file-list="fileList"
+              list-type="picture-card"
+              :on-remove="handleRemove"
+              :on-preview="handlePictureCardPreview"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">
+                只能上传jpg/png文件，且不超过500kb
+              </div>
+            </el-upload>
+          </el-form-item>
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -99,16 +114,25 @@ export default {
       Object.keys(this.formData).forEach(key => {
         this.formData[key] = temp[key];
       });
+      this.formData.logos = this.rowData.logos.map(v => v._id);
+      this.fileList = this.rowData.logos.map(v => ({
+        name: v.name,
+        url: v.url
+      }));
     }
   },
   data() {
     return {
+      dialogImageUrl: "",
+      dialogVisible: false,
+      fileList: [],
       loading: false,
       formData: {
         //  ... 表单字段
         title: undefined,
         category: undefined,
-        tags: undefined
+        tags: undefined,
+        logos: undefined
       },
       rules: {
         //  ... 表单校验
@@ -121,6 +145,18 @@ export default {
     };
   },
   methods: {
+    handleRemove(file, fileList) {
+      this.handleChange(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleChange(file, fileList) {
+      this.formData.logos = fileList
+        .filter(v => v.response && v.response._id)
+        .map(v => v.response._id);
+    },
     /** 确定 */
     confirm() {
       this.$refs["form"].validate(valid => {
@@ -155,6 +191,7 @@ export default {
           this.formData[key] = undefined;
         });
       });
+      this.fileList = [];
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
