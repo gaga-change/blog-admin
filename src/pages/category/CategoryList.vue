@@ -79,6 +79,7 @@ export default {
     /** 刷新列表 */
     getTableData() {
       this.$refs["baseList"].fetchData();
+      this.$store.dispatch("initMap", "categories");
     },
     /** 新建 */
     handleCreate() {

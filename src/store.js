@@ -14,25 +14,27 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    initMap(context) {
-      tagsList({ pageSize: 999 }).then(res => {
-        if (!res) return;
-        context.commit("setMap", {
-          tags: res.list.map(v => ({
-            key: v.name,
-            value: v._id
-          }))
+    initMap(context, key) {
+      if (key === undefined || key === "tags")
+        tagsList({ pageSize: 999 }).then(res => {
+          if (!res) return;
+          context.commit("setMap", {
+            tags: res.list.map(v => ({
+              key: v.name,
+              value: v._id
+            }))
+          });
         });
-      });
-      categoriesList({ pageSize: 999 }).then(res => {
-        if (!res) return;
-        context.commit("setMap", {
-          categories: res.list.map(v => ({
-            key: v.name,
-            value: v._id
-          }))
+      if (key === undefined || key === "categories")
+        categoriesList({ pageSize: 999 }).then(res => {
+          if (!res) return;
+          context.commit("setMap", {
+            categories: res.list.map(v => ({
+              key: v.name,
+              value: v._id
+            }))
+          });
         });
-      });
     }
   }
 });
