@@ -21,11 +21,12 @@
               clearable
               :placeholder="`请选择${item.label}`"
               size="mini"
+              @change="handleSelectChange"
             >
               <el-option
-                v-for="item in mapConfig[item.enum]"
-                :key="item.name"
-                :label="item.name"
+                v-for="item in map[item.enum]"
+                :key="item.key"
+                :label="item.key"
                 :value="item.value"
               >
               </el-option>
@@ -35,7 +36,7 @@
             <el-radio-group v-model="searchForms[item.prop]">
               <el-radio
                 :label="v.value"
-                v-for="v in mapConfig[item.radio]"
+                v-for="v in map[item.radio]"
                 :key="v.value"
                 >{{ v.name }}</el-radio
               >
@@ -109,6 +110,9 @@ export default {
     },
     configRange() {
       return this.config.filter(v => v.props);
+    },
+    map() {
+      return this.$store.state.map;
     }
   },
   watch: {
@@ -118,7 +122,6 @@ export default {
   },
   data() {
     return {
-      mapConfig: [],
       pickerOptions: {
         shortcuts: [
           {
@@ -160,6 +163,10 @@ export default {
     };
   },
   methods: {
+    /** 下拉框 切换事件。 触发查询 */
+    handleSelectChange() {
+      this.hanldeSubmit();
+    },
     bindKeys() {
       const query = this.$route.query;
       this.config.forEach(v => {
@@ -187,6 +194,11 @@ export default {
           }
         });
       }
+      Object.keys(searchForms).forEach(key => {
+        if (!searchForms[key]) {
+          delete searchForms[key];
+        }
+      });
       this.$emit("search", this.paramsTrim(searchForms), () => {
         this.submitLoading = false;
       });

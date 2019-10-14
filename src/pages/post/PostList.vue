@@ -52,7 +52,11 @@ const tableConfig = [
   { label: "创建时间", prop: "createdAt", type: "time" }
 ];
 
-const searchConfig = [{ label: "标题", prop: "title" }];
+const searchConfig = [
+  { label: "标题", prop: "title" },
+  { label: "分类", prop: "category", type: "enum", enum: "categories" },
+  { label: "标签", prop: "tags", type: "enum", enum: "tags" }
+];
 
 export default {
   components: { PostFormDialog },

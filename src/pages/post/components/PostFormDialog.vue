@@ -25,32 +25,32 @@
           </el-form-item>
           <el-form-item label="分类" prop="category">
             <el-select
-              :loading="categoriesListLoading"
+              :loading="!map['categories']"
               v-model="formData.category"
               placeholder="请选择分类"
               clearable
             >
               <el-option
-                v-for="item in categories"
-                :key="item._id"
-                :label="item.name"
-                :value="item._id"
+                v-for="item in map['categories']"
+                :key="item.key"
+                :label="item.key"
+                :value="item.value"
               ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="标签" prop="tags">
             <el-select
-              :loading="tagsListLoading"
+              :loading="!map['tags']"
               v-model="formData.tags"
               placeholder="请选择分类"
               multiple
               clearable
             >
               <el-option
-                v-for="item in tags"
-                :key="item._id"
-                :label="item.name"
-                :value="item._id"
+                v-for="item in map['tags']"
+                :key="item.key"
+                :label="item.key"
+                :value="item.value"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { postsCreate, postsUpdate, categoriesList, tagsList } from "@/api";
+import { postsCreate, postsUpdate } from "@/api";
 export default {
   props: {
     visible: {
@@ -84,6 +84,9 @@ export default {
     /** 防止父级传递 null */
     rowData() {
       return this.row || {};
+    },
+    map() {
+      return this.$store.state.map;
     }
   },
   watch: {
@@ -100,10 +103,6 @@ export default {
   },
   data() {
     return {
-      categoriesListLoading: true,
-      tagsListLoading: false,
-      categories: [],
-      tags: [],
       loading: false,
       formData: {
         //  ... 表单字段
@@ -120,20 +119,6 @@ export default {
         category: [{ required: true, message: "必填项", trigger: "blur" }]
       }
     };
-  },
-  created() {
-    this.categoriesListLoading = true;
-    categoriesList({ pageSize: 999 }).then(res => {
-      this.categoriesListLoading = false;
-      if (!res) return;
-      this.categories = res.list;
-    });
-    this.tagsListLoading = true;
-    tagsList({ pageSize: 999 }).then(res => {
-      this.tagsListLoading = false;
-      if (!res) return;
-      this.tags = res.list;
-    });
   },
   methods: {
     /** 确定 */
