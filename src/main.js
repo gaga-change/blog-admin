@@ -7,8 +7,10 @@ import { cloneDeep } from "lodash";
 import { moment } from "moment";
 import locale from "element-ui/lib/locale/lang/zh-CN";
 import "element-ui/lib/theme-chalk/index.css";
-import "simplemde/dist/simplemde.min.css";
-import api from "./api";
+import "tui-editor/dist/tui-editor.css"; // editor's ui
+import "tui-editor/dist/tui-editor-contents.css"; // editor's content
+import "codemirror/lib/codemirror.css"; // codemirror
+import "highlight.js/styles/github.css"; // code block highlight
 import store from "./store";
 import router from "./router";
 import App from "./App";
@@ -62,7 +64,6 @@ Vue.use(ElementUI, { locale, size: "mini" });
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
-Vue.prototype.$API = api.call(new Vue()); // 全局配置api
 
 // 全局路由钩子
 router.beforeEach(async (to, from, next) => {

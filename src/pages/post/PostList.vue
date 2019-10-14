@@ -16,6 +16,14 @@
             nowRow = scope.row;
             postFormDialogVisible = true;
           "
+          >快速编辑</el-link
+        >
+        <el-divider direction="vertical"></el-divider>
+        <el-link
+          type="primary"
+          @click="
+            $router.push({ name: 'PostCreate', query: { id: scope.row._id } })
+          "
           >编辑</el-link
         >
         <el-divider direction="vertical"></el-divider>
@@ -49,6 +57,7 @@ const tableConfig = [
   { label: "标题", prop: "title" },
   { label: "分类", prop: "categoryText" },
   { label: "标签", prop: "tagsText" },
+  { label: "发布时间", prop: "releaseTime", type: "time" },
   { label: "创建时间", prop: "createdAt", type: "time" }
 ];
 

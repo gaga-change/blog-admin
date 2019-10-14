@@ -16,7 +16,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "qiniu-upload-dir": "0.0.1",
-    "simplemde": "^1.11.2",
+    "tui-editor": "^1.4.7",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"

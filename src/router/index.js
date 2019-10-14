@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import AdminHome from "@/pages/AdminHome";
 import UserLogin from "@/pages/UserLogin";
-import PostCreate from "@/pages/content/PostCreate";
+import PostCreate from "@/pages/post/PostCreate";
 import WebSet from "@/pages/content/WebSet";
 import TagList from "@/pages/tag/TagList";
 import PostList from "@/pages/post/PostList";
@@ -17,9 +17,10 @@ export default new Router({
     {
       path: "/",
       component: AdminHome,
+      redirect: "PostCreate",
       children: [
         {
-          path: "",
+          path: "PostCreate",
           name: "PostCreate",
           component: PostCreate,
           meta: {
