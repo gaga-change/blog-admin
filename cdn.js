@@ -8,4 +8,8 @@ const config = {
   prefix: "blog/admin/static/" // 附加前缀，可以为空，或者不填
 };
 
-upload("./dist", config);
+if (config.accessKey && config.secretKey) {
+  upload("./dist", config);
+} else {
+  console.error("请配置【QINIU_ACCESS_KEY】、【QINIU_SECRET_KEY】");
+}

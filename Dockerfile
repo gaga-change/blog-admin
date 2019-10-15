@@ -1,5 +1,6 @@
 FROM node:8-alpine as shark-vue-build
-# ARG IMAGE_TAG=0.0.0
+ARG QINIU_ACCESS_KEY
+ARG QINIU_SECRET_KEY
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install
