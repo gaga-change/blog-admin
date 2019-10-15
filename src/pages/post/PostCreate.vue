@@ -44,7 +44,7 @@
         <el-date-picker
           type="datetime"
           placeholder="选择日期时间"
-          v-model="formData.releaseTime"
+          v-model="formData.releaseDate"
           style="width: 193px"
         ></el-date-picker>
       </el-form-item>
@@ -74,7 +74,7 @@ export default {
         title: undefined,
         category: undefined,
         tags: undefined,
-        releaseTime: Date.now(),
+        releaseDate: Date.now(),
         intro: undefined
       },
       rules: {
