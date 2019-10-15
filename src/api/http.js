@@ -32,7 +32,7 @@ newAxios.interceptors.response.use(
           message = "该对象已存在，不允许重复添加！";
           break;
         default:
-          message = "系统异常";
+          message = message || "系统异常";
       }
       Message({
         type: "error",
