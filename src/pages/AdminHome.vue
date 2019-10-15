@@ -1,23 +1,26 @@
 <template>
-  <el-container>
-    <el-header>
-      <!-- 头部 -->
-      <v-top-header></v-top-header>
-    </el-header>
-    <el-container>
-      <el-scrollbar class="page-component__scroll ">
-        <el-aside width="200px">
-          <!-- 侧边栏 -->
-          <v-left-aside :navActive="navActive"></v-left-aside>
-        </el-aside>
-        <el-main>
-          <router-view />
-        </el-main>
-      </el-scrollbar>
-    </el-container>
+  <el-container v-loading="loading">
+    <template v-if="!loading">
+      <el-header>
+        <!-- 头部 -->
+        <v-top-header></v-top-header>
+      </el-header>
+      <el-container>
+        <el-scrollbar class="page-component__scroll ">
+          <el-aside width="200px">
+            <!-- 侧边栏 -->
+            <v-left-aside :navActive="navActive"></v-left-aside>
+          </el-aside>
+          <el-main>
+            <router-view />
+          </el-main>
+        </el-scrollbar>
+      </el-container>
+    </template>
   </el-container>
 </template>
 <script>
+import { authCurrent } from "@/api";
 import TopHeader from "./nav_bar/TopHeader.vue";
 import LeftAside from "./nav_bar/LeftAside.vue";
 export default {
@@ -28,26 +31,23 @@ export default {
   data() {
     return {
       navActive: "",
-      isCollapse: true
+      loading: true
     };
   },
-  // beforeRouteEnter(to, from, next) {
-  // 	next(vm => {
-  // 		vm.navActive = to.name
-  // 	})
-  // },
   beforeRouteUpdate(to, from, next) {
     this.navActive = to.name;
     next();
   },
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
-  }
+  created() {
+    authCurrent().then(res => {
+      if (res._id) {
+        this.loading = false;
+      } else {
+        this.$router.replace({ name: "UserLogin" });
+      }
+    });
+  },
+  methods: {}
 };
 </script>
 <style lang="less">
@@ -88,12 +88,9 @@ export default {
     height: 100%;
   }
 }
-
 .el-main {
   background-color: #fff;
   color: #333;
   margin-left: 200px;
-  // text-align: center;
-  // line-height: 160px;
 }
 </style>
