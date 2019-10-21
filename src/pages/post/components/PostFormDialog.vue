@@ -163,11 +163,6 @@ export default {
         if (valid) {
           this.loading = true;
           let params = { ...this.formData };
-          for (let key in params) {
-            if (params[key] === undefined) {
-              params[key] = "";
-            }
-          }
           let api = postsCreate;
           if (this.rowData._id) {
             api = postsUpdate;

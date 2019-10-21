@@ -83,7 +83,7 @@ export default {
   methods: {
     /** 删除 */
     handleDelete(row) {
-      this.$apiConfirm(`是否确定删除【${row.name}】？`, () =>
+      this.$apiConfirm(`是否确定删除【${row.title}】？`, () =>
         postsDestroy(row._id)
       ).then(res => {
         if (!res) return;
