@@ -4,32 +4,43 @@
       ref="site"
       :model="site"
       :rules="rules"
-      label-width="80px"
+      label-width="110px"
       size="small "
       class="demo-ruleForm"
     >
       <el-form-item label="站点标题" prop="header">
-        <el-input v-model="site.header" placeholder="请输入站点标题"></el-input>
+        <el-input
+          v-model="site.header"
+          placeholder="请输入站点标题"
+          maxlength="100"
+        ></el-input>
       </el-form-item>
       <el-form-item label="副标题">
         <el-input
           v-model="site.subhead"
-          maxlength="20"
+          maxlength="200"
           placeholder="请输入副标题"
         ></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input
           v-model="site.description"
-          maxlength="200"
+          maxlength="300"
           placeholder="请输入描述"
         ></el-input>
       </el-form-item>
       <el-form-item label="关键词">
         <el-input
           v-model="site.keywords"
-          mamaxlengthx="200"
+          mamaxlengthx="300"
           placeholder="请输入关键词"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="附加js文件地址">
+        <el-input
+          v-model="site.appendJsFileUrl"
+          mamaxlengthx="300"
+          placeholder="请输入附加js文件地址"
         ></el-input>
       </el-form-item>
       <el-form-item>
@@ -52,7 +63,8 @@ export default {
         header: "",
         subhead: "",
         description: "",
-        keywords: ""
+        keywords: "",
+        appendJsFileUrl: ""
       },
       rules: {
         header: [
