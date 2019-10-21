@@ -52,7 +52,7 @@ export default new Router({
           }
         },
         {
-          path: "web_set",
+          path: "WebSet",
           name: "WebSet",
           component: WebSet,
           meta: {

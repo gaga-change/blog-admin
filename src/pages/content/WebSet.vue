@@ -9,39 +9,45 @@
       class="demo-ruleForm"
     >
       <el-form-item label="站点标题" prop="header">
-        <el-input v-model="site.header"></el-input>
+        <el-input v-model="site.header" placeholder="请输入站点标题"></el-input>
       </el-form-item>
       <el-form-item label="副标题">
-        <el-input v-model="site.subhead" maxlength="20"></el-input>
+        <el-input
+          v-model="site.subhead"
+          maxlength="20"
+          placeholder="请输入副标题"
+        ></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input
           v-model="site.description"
           maxlength="200"
-          placeholder="description"
+          placeholder="请输入描述"
         ></el-input>
       </el-form-item>
       <el-form-item label="关键词">
         <el-input
           v-model="site.keywords"
           mamaxlengthx="200"
-          placeholder="keywords"
+          placeholder="请输入关键词"
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('site')"
-          >立即修改</el-button
-        >
+        <el-button type="primary" @click="submitForm('site')">
+          {{ detail ? "立即修改" : "立即创建" }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { webSetsList, webSetsUpdate, webSetsCreate } from "@/api";
 export default {
   data() {
     return {
       loading: true,
+      detail: null,
       site: {
         header: "",
         subhead: "",
@@ -60,31 +66,34 @@ export default {
     this.initData();
   },
   methods: {
-    // 初始haul数据
+    // 初始化数据
     initData() {
-      this.$API.getSite().then(res => {
+      webSetsList().then(res => {
         this.loading = false;
-        this.site = res.data;
+        if (!res) return;
+        if (res.total) {
+          let detail = res.list[0];
+          this.detail = detail;
+          Object.keys(this.site).forEach(key => {
+            this.site[key] = this.detail[key];
+          });
+        }
       });
     },
     // 表单提交
     submitForm(formName) {
+      let api = this.detail ? webSetsUpdate : webSetsCreate;
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$API.setSite(this.site).then(res => {
-            this.loading = false;
-            if (!res.err) {
-              this.$message({
-                showClose: true,
-                message: "修改成功",
-                type: "success"
-              });
-              this.site = res.data;
+          let params = { ...this.site };
+          api(params, this.detail ? this.detail._id : null).then(res => {
+            if (!res) {
+              this.loading = false;
             }
+            this.$message.success(this.detail ? "修改成功！" : "创建成功！");
+            this.initData();
           });
-        } else {
-          return false;
         }
       });
     }

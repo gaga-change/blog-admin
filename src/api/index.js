@@ -24,3 +24,10 @@ export const postsCreate = params => http.post("/api/posts", params);
 export const postsShow = id => http.get(`/api/posts/${id}`);
 export const postsDestroy = id => http.delete(`/api/posts/${id}`);
 export const postsUpdate = (params, id) => http.put(`/api/posts/${id}`, params);
+/** 站点设置 */
+export const webSetsList = params => http.get("/api/webSets", { params });
+export const webSetsCreate = params => http.post("/api/webSets", params);
+export const webSetsShow = id => http.get(`/api/webSets/${id}`);
+export const webSetsDestroy = id => http.delete(`/api/webSets/${id}`);
+export const webSetsUpdate = (params, id) =>
+  http.put(`/api/webSets/${id}`, params);
