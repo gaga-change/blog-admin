@@ -19,6 +19,9 @@ export default {
   overflow-y: hidden;
   height: 100%;
 }
+.CodeMirror-scroll {
+  min-height: 160px;
+}
 .el-divider__text,
 .el-link {
   font-size: 12px;

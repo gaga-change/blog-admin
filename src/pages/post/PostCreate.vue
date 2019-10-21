@@ -3,6 +3,7 @@
     <el-form
       :model="formData"
       :rules="rules"
+      :inline="true"
       ref="formData"
       label-width="100px"
     >
@@ -50,18 +51,26 @@
       </el-form-item>
       <div ref="markdown" class="mb15"></div>
       <el-form-item label="描述">
-        <el-input type="textarea" v-model="formData.intro"></el-input>
+        <el-input
+          type="textarea"
+          :rows="2"
+          v-model="formData.intro"
+          style="width:400px;"
+        ></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('formData')">{{
-          edit ? "立即修改" : "立即创建"
-        }}</el-button>
-        <!-- <el-button @click="resetForm('formData')">重置</el-button> -->
-      </el-form-item>
+      <div>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('formData')">{{
+            edit ? "立即修改" : "立即创建"
+          }}</el-button>
+          <!-- <el-button @click="resetForm('formData')">重置</el-button> -->
+        </el-form-item>
+      </div>
     </el-form>
   </div>
 </template>
 <script>
+import "tui-editor/dist/tui-editor-extScrollSync.js";
 import Editor from "tui-editor";
 import { postsCreate, postsUpdate, postsShow } from "@/api";
 export default {
@@ -98,7 +107,8 @@ export default {
       el: this.$refs["markdown"],
       initialEditType: "markdown",
       previewStyle: "vertical",
-      height: "300px"
+      height: "600px",
+      exts: ["scrollSync"]
     });
     this.instance = instance;
   },

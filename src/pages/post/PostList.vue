@@ -30,14 +30,7 @@
         <el-link type="primary" @click="handleDelete(scope.row)">删除</el-link>
       </template>
       <template slot="btns">
-        <el-button
-          type="primary"
-          size="mini"
-          @click="
-            nowRow = null;
-            postFormDialogVisible = true;
-          "
-        >
+        <el-button type="primary" size="mini" @click="handleCreate">
           新建笔记
         </el-button>
       </template>
@@ -107,7 +100,7 @@ export default {
     },
     /** 新建 */
     handleCreate() {
-      this.$router.push({ path: "/qualityTesting/create" });
+      this.$router.push({ name: "PostCreate" });
     }
   }
 };
