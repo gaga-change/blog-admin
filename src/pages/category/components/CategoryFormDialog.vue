@@ -95,11 +95,13 @@ export default {
           this.rowData[key] === null ? undefined : this.rowData[key]
         );
       });
-      this.formData.logos = this.rowData.logos.map(v => v._id);
-      this.fileList = this.rowData.logos.map(v => ({
-        name: v.name,
-        url: v.url
-      }));
+      if (this.rowData._id) {
+        this.formData.logos = this.rowData.logos.map(v => v._id);
+        this.fileList = this.rowData.logos.map(v => ({
+          name: v.name,
+          url: v.url
+        }));
+      }
     }
   },
   data() {
@@ -142,11 +144,6 @@ export default {
         if (valid) {
           this.loading = true;
           let params = { ...this.formData };
-          for (let key in params) {
-            if (params[key] === undefined) {
-              params[key] = "";
-            }
-          }
           let api = categoriesCreate;
           if (this.rowData._id) {
             api = categoriesUpdate;

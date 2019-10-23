@@ -109,16 +109,18 @@ export default {
     visible(val) {
       if (!val) return;
       let temp = { ...this.rowData };
-      temp.category = temp.category._id;
+      temp.category = temp.category ? temp.category._id : undefined;
       temp.tags = temp.tags.map(v => v._id);
       Object.keys(this.formData).forEach(key => {
         this.formData[key] = temp[key];
       });
-      this.formData.logos = this.rowData.logos.map(v => v._id);
-      this.fileList = this.rowData.logos.map(v => ({
-        name: v.name,
-        url: v.url
-      }));
+      if (this.rowData._id) {
+        this.formData.logos = this.rowData.logos.map(v => v._id);
+        this.fileList = this.rowData.logos.map(v => ({
+          name: v.name,
+          url: v.url
+        }));
+      }
     }
   },
   data() {
