@@ -7,6 +7,7 @@ import WebSet from "@/pages/content/WebSet";
 import TagList from "@/pages/tag/TagList";
 import PostList from "@/pages/post/PostList";
 import CategoryList from "@/pages/category/CategoryList";
+import PageMenuList from "@/pages/pageMenu/PageMenuList";
 
 Vue.use(Router);
 
@@ -49,6 +50,14 @@ export default new Router({
           component: TagList,
           meta: {
             title: "标签管理"
+          }
+        },
+        {
+          path: "PageMenuList",
+          name: "PageMenuList",
+          component: PageMenuList,
+          meta: {
+            title: "导航管理"
           }
         },
         {

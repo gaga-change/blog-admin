@@ -32,6 +32,9 @@ npm run serve
 # build for production with minification 打包
 npm run build
 
+# 自动格式化代码
+npm run lint --fix
+
 ```
 ## 部署时nginx 配置（大致）
 

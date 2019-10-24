@@ -152,7 +152,7 @@
 
 <script>
 import moment from "moment";
-
+import * as Enum from "@/enum";
 export default {
   props: {
     /** 是否扩展 */
@@ -270,7 +270,7 @@ export default {
       selfPageSize: 10,
       selfCurrentPage: 1,
       selfLoading: true,
-      mapConfig: []
+      mapConfig: { ...Enum }
     };
   },
   mounted() {

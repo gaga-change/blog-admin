@@ -31,3 +31,11 @@ export const webSetsShow = id => http.get(`/api/webSets/${id}`);
 export const webSetsDestroy = id => http.delete(`/api/webSets/${id}`);
 export const webSetsUpdate = (params, id) =>
   http.put(`/api/webSets/${id}`, params);
+
+/** 导航栏 */
+export const pageMenusList = params => http.get("/api/pageMenus", { params });
+export const pageMenusCreate = params => http.post("/api/pageMenus", params);
+export const pageMenusShow = id => http.get(`/api/pageMenus/${id}`);
+export const pageMenusDestroy = id => http.delete(`/api/pageMenus/${id}`);
+export const pageMenusUpdate = (params, id) =>
+  http.put(`/api/pageMenus/${id}`, params);

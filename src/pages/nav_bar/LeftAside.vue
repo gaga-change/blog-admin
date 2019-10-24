@@ -27,16 +27,20 @@
       <span slot="title">发布笔记</span>
     </el-menu-item>
     <el-menu-item index="PostList" :route="{ name: 'PostList' }">
-      <i class="el-icon-tickets"></i>
+      <i class="el-icon-document"></i>
       <span slot="title">笔记列表</span>
     </el-menu-item>
     <el-menu-item index="CategoryList" :route="{ name: 'CategoryList' }">
-      <i class="el-icon-tickets"></i>
+      <i class="el-icon-folder"></i>
       <span slot="title">分类管理</span>
     </el-menu-item>
     <el-menu-item index="TagList" :route="{ name: 'TagList' }">
-      <i class="el-icon-tickets"></i>
+      <i class="el-icon-price-tag"></i>
       <span slot="title">标签管理</span>
+    </el-menu-item>
+    <el-menu-item index="PageMenuList" :route="{ name: 'PageMenuList' }">
+      <i class="el-icon-help"></i>
+      <span slot="title">导航管理</span>
     </el-menu-item>
     <el-menu-item index="WebSet" :route="{ name: 'WebSet' }">
       <i class="el-icon-setting"></i>
