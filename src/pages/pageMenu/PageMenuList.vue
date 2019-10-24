@@ -48,6 +48,8 @@ const tableConfig = [
   { label: "名称", prop: "name" },
   { label: "路径", prop: "path" },
   { label: "类型", prop: "type", type: "enum", enum: "pageMenuType" },
+  { label: "是否显示", prop: "show", type: "enum", enum: "booleanEnum" },
+  { label: "优先级", prop: "order" },
   { label: "备注", prop: "remark" },
   { label: "创建时间", prop: "createdAt", type: "time" }
 ];

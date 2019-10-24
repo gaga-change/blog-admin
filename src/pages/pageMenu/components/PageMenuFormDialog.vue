@@ -43,6 +43,17 @@
               <el-radio :label="1">外链</el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item label="优先级" prop="order">
+            <el-input-number v-model="formData.order"></el-input-number>
+          </el-form-item>
+          <el-form-item label="是否显示" prop="show">
+            <el-switch
+              v-model="formData.show"
+              :active-value="true"
+              :inactive-value="false"
+            >
+            </el-switch>
+          </el-form-item>
           <el-form-item label="备注" prop="remark">
             <el-input
               style="width:200px;"
@@ -115,7 +126,9 @@ export default {
         path: null,
         icon: null,
         type: 0,
-        remark: null
+        remark: null,
+        order: 0,
+        show: true
       },
       rules: {
         //  ... 表单校验

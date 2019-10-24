@@ -8,3 +8,13 @@ export const pageMenuType = [
     value: 1
   }
 ];
+export const booleanEnum = [
+  {
+    name: "否",
+    value: false
+  },
+  {
+    name: "是",
+    value: true
+  }
+];
