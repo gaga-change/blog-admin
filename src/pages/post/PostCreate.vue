@@ -8,10 +8,16 @@
       label-width="100px"
     >
       <el-form-item label="标题" prop="title">
-        <el-input v-model="formData.title" maxlength="300"></el-input>
+        <el-input
+          style="width:200px"
+          v-model="formData.title"
+          maxlength="300"
+          placeholder="请输入标题"
+        ></el-input>
       </el-form-item>
       <el-form-item label="分类" prop="category">
         <el-select
+          style="width:200px"
           :loading="!map['categories']"
           v-model="formData.category"
           placeholder="请选择分类"
@@ -27,6 +33,7 @@
       </el-form-item>
       <el-form-item label="标签" prop="tags">
         <el-select
+          style="width:200px"
           :loading="!map['tags']"
           v-model="formData.tags"
           placeholder="请选择分类"
@@ -43,10 +50,10 @@
       </el-form-item>
       <el-form-item label="发布时间" prop="date">
         <el-date-picker
+          style="width:200px"
           type="datetime"
           placeholder="选择日期时间"
           v-model="formData.releaseDate"
-          style="width: 193px"
         ></el-date-picker>
       </el-form-item>
       <div ref="markdown" class="mb15"></div>
@@ -78,6 +85,7 @@ export default {
     return {
       edit: false, // 是否是编辑状态
       query: this.$route.query,
+      detail: {},
       loading: false,
       formData: {
         title: undefined,
@@ -100,6 +108,33 @@ export default {
     if (this.query.id) {
       this.edit = true;
       this.initData();
+    } else {
+      const cache = localStorage.getItem("POST_CACHE");
+      if (cache) {
+        this.$confirm("有检测到上次未完善的内容, 是否继续?", "提示", {
+          confirmButtonText: "还原",
+          cancelButtonText: "取消",
+          type: "info"
+        })
+          .then(() => {
+            const detail = JSON.parse(cache);
+            Object.keys(this.formData).forEach(key => {
+              this.formData[key] = detail[key];
+            });
+            this.instance.setMarkdown(detail.markdown);
+            this.$message({
+              type: "success",
+              message: "还原成功！"
+            });
+          })
+          .catch(() => {
+            localStorage.removeItem("POST_CACHE");
+            this.$message({
+              type: "info",
+              message: "已清理缓存"
+            });
+          });
+      }
     }
   },
   mounted() {
@@ -112,6 +147,25 @@ export default {
     });
     this.instance = instance;
   },
+  beforeDestroy() {
+    if (this.instance) {
+      if (
+        (!this.edit && this.instance.getMarkdown().trim()) ||
+        (this.edit &&
+          this.instance.getMarkdown().trim() !== this.detail.markdown.trim())
+      ) {
+        let detail = {
+          ...this.formData,
+          content: this.instance.getHtml(),
+          markdown: this.instance.getMarkdown()
+        };
+        localStorage.setItem("POST_CACHE", JSON.stringify(detail));
+      } else {
+        // 手动清除内容
+        localStorage.removeItem("POST_CACHE");
+      }
+    }
+  },
   methods: {
     // 数据初始化
     initData() {
@@ -119,6 +173,7 @@ export default {
       postsShow(this.query.id).then(res => {
         this.loading = false;
         if (!res) return;
+        this.detail = res;
         Object.keys(this.formData).forEach(key => {
           this.formData[key] = res[key];
         });
@@ -142,6 +197,8 @@ export default {
             this.$message.success(this.edit ? "修改成功" : "创建成功");
             // 非编辑状态改为编辑状态
             this.edit = true;
+            this.instance.setMarkdown("");
+            localStorage.removeItem("POST_CACHE");
             this.$router.replace({
               name: "PostList"
             });
