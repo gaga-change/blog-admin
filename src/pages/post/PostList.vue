@@ -50,6 +50,7 @@ const tableConfig = [
   { label: "标题", prop: "title" },
   { label: "分类", prop: "categoryText" },
   { label: "标签", prop: "tagsText" },
+  { label: "发布", prop: "show", type: "enum", enum: "booleanEnum" },
   { label: "发布时间", prop: "releaseDate", type: "time" },
   { label: "创建时间", prop: "createdAt", type: "time" }
 ];

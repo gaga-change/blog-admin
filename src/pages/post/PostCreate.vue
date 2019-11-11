@@ -65,6 +65,14 @@
           style="width:400px;"
         ></el-input>
       </el-form-item>
+      <el-form-item label="发布" prop="show">
+        <el-switch
+          v-model="formData.show"
+          :active-value="true"
+          :inactive-value="false"
+        >
+        </el-switch>
+      </el-form-item>
       <div>
         <el-form-item>
           <el-button type="primary" @click="submitForm('formData')">{{
@@ -92,7 +100,8 @@ export default {
         category: undefined,
         tags: undefined,
         releaseDate: Date.now(),
-        intro: undefined
+        intro: undefined,
+        show: true
       },
       rules: {
         title: [{ required: true, message: "请输入笔记标题", trigger: "blur" }]
@@ -152,6 +161,7 @@ export default {
       if (
         (!this.edit && this.instance.getMarkdown().trim()) ||
         (this.edit &&
+          this.detail.markdown &&
           this.instance.getMarkdown().trim() !== this.detail.markdown.trim())
       ) {
         let detail = {

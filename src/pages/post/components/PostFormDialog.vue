@@ -38,6 +38,14 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="发布" prop="show">
+            <el-switch
+              v-model="formData.show"
+              :active-value="true"
+              :inactive-value="false"
+            >
+            </el-switch>
+          </el-form-item>
           <el-form-item label="标签" prop="tags">
             <el-select
               :loading="!map['tags']"
@@ -134,7 +142,8 @@ export default {
         title: undefined,
         category: undefined,
         tags: undefined,
-        logos: undefined
+        logos: undefined,
+        show: undefined
       },
       rules: {
         //  ... 表单校验
